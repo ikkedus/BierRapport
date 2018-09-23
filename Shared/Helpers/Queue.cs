@@ -18,6 +18,7 @@ namespace Shared.Helpers
             var client = storageAccount.CreateCloudQueueClient();
 
             var queue = client.GetQueueReference(queueId);
+
             await queue.CreateIfNotExistsAsync();
 
             await queue.AddMessageAsync(new CloudQueueMessage(JsonConvert.SerializeObject(item)));
