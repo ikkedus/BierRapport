@@ -9,22 +9,30 @@ namespace Shared.Helpers
 {
     public static class RequestHelper
     {
-        public static object request(string url)
+        public static Stream request(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             try
             {
                 WebResponse response = request.GetResponse();
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    return reader.ReadToEnd();
-                }
+                return response.GetResponseStream();
+                
             }
             catch (WebException ex)
             {
                 throw ex;
             }
+        }
+
+        public static string request(string url,bool bul)
+        {
+           
+            using (Stream responseStream = request(url))
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                return reader.ReadToEnd();
+            }
+            
         }
     }
 }

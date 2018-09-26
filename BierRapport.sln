@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BierRapport", "BierRapport\BierRapport.csproj", "{DCD29426-8CA5-4081-8CD8-0F2263F18731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BierRapport", "BierRapport\BierRapport.csproj", "{DCD29426-8CA5-4081-8CD8-0F2263F18731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueProcessor", "QueueProcessor\QueueProcessor.csproj", "{86B48F21-8000-4EA5-8DC5-E317BAA1E630}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueProcessor", "QueueProcessor\QueueProcessor.csproj", "{86B48F21-8000-4EA5-8DC5-E317BAA1E630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{1D793B25-63BE-4641-93BC-708FEB940F92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{1D793B25-63BE-4641-93BC-708FEB940F92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
