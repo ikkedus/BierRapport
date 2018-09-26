@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueProcessor", "QueueProc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{1D793B25-63BE-4641-93BC-708FEB940F92}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51ACF372-88D0-44DD-8333-2EABCBF25BDA}"
+	ProjectSection(SolutionItems) = preProject
+		Azure Web app.postman_collection.json = Azure Web app.postman_collection.json
+		DeploymentTemplate.json = DeploymentTemplate.json
+	EndProjectSection
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "BierrapportArm", "BierrapportArm\BierrapportArm.deployproj", "{3DF52BD6-DA25-4522-B75C-15832A81D00F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +35,10 @@ Global
 		{1D793B25-63BE-4641-93BC-708FEB940F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D793B25-63BE-4641-93BC-708FEB940F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D793B25-63BE-4641-93BC-708FEB940F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DF52BD6-DA25-4522-B75C-15832A81D00F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DF52BD6-DA25-4522-B75C-15832A81D00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DF52BD6-DA25-4522-B75C-15832A81D00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DF52BD6-DA25-4522-B75C-15832A81D00F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

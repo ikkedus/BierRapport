@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "d379dcff-8e63-4370-a525-7c441f1f2e88",
+		"name": "Azure Web app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GenReport",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://bierrapport20180926040402.azurewebsites.net/api/RequestBierRapport?code=2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g==&city=Alkmaar&country=nl",
+					"protocol": "https",
+					"host": [
+						"bierrapport20180926040402",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"RequestBierRapport"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g=="
+						},
+						{
+							"key": "city",
+							"value": "Alkmaar"
+						},
+						{
+							"key": "country",
+							"value": "nl"
+						}
+					]
+				},
+				"description": "deze request start een job die alle relevante informatie ophaalt en verwerkt. geeft een guid om het resultaat op te kunnen halen met een andere commando"
+			},
+			"response": []
+		},
+		{
+			"name": "GetReport",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://bierrapport20180926040402.azurewebsites.net/api/RequestBierRapport?code=2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g==&id=25f515a0-7d5f-4295-beef-aaa7f3601d1c",
+					"protocol": "https",
+					"host": [
+						"bierrapport20180926040402",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"RequestBierRapport"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g==",
+							"description": "azure key"
+						},
+						{
+							"key": "id",
+							"value": "25f515a0-7d5f-4295-beef-aaa7f3601d1c",
+							"description": "Guid geveen in genreport"
+						}
+					]
+				},
+				"description": "dit commando haalt een gemaakte report op. aan de hand van de guid die gegeven is bij het aanvragen van de report"
+			},
+			"response": []
+		}
+	]
+}
