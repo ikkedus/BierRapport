@@ -55,7 +55,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "https://bierrapport20180926040402.azurewebsites.net/api/RequestBierRapport?code=2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g==&id=25f515a0-7d5f-4295-beef-aaa7f3601d1c",
+					"raw": "https://bierrapport20180926040402.azurewebsites.net/api/RequestBierRapport?code=2A0Ul0V2RUntjsv/IOeTKAaKx9w4To1GnAwzDVSYz2XsM2RZaHyS7g==&id=fb4881a5-db1c-47f7-98a4-decef78a3186",
 					"protocol": "https",
 					"host": [
 						"bierrapport20180926040402",
@@ -74,8 +74,8 @@
 						},
 						{
 							"key": "id",
-							"value": "25f515a0-7d5f-4295-beef-aaa7f3601d1c",
-							"description": "Guid geveen in genreport"
+							"value": "fb4881a5-db1c-47f7-98a4-decef78a3186",
+							"description": "Guid geven in genreport"
 						}
 					]
 				},

@@ -1,135 +1,538 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-
-  },
-  "variables": {
-    "baseName": "[uniquestring(resourceGroup().id, deployment().name)]",
-
-    "apiHostingPlanName": "[concat(variables('baseName'), '-plan')]",
-
-    "apiName": "[concat(variables('baseName'), '-api')]",
-    "apiProperties": {
-      "phpVersion": "",
-      "pythonVersion": "",
-      "javaVersion": "",
-      "webSocketsEnabled": false,
-      "httpLoggingEnabled": true
+    "accounts_Bierrapport_name": {
+      "defaultValue": "Bierrapport",
+      "type": "String"
     },
-
-    "storageAccountName": "[concat(variables('baseName'))]",
-
-    "functionsName": "[concat(variables('baseName'), '-fun')]"
+    "storageAccounts_bierrapport_name": {
+      "defaultValue": "bierrapport",
+      "type": "String"
+    },
+    "sites_BierRapport20180926040402_name": {
+      "defaultValue": "BierRapport20180926040402",
+      "type": "String"
+    },
+    "sites_QueueProcessor20180926040624_name": {
+      "defaultValue": "QueueProcessor20180926040624",
+      "type": "String"
+    },
+    "serverfarms_ServicePlan2a9cbfc8_b1ee_name": {
+      "defaultValue": "ServicePlan2a9cbfc8-b1ee",
+      "type": "String"
+    },
+    "serverfarms_BierRapport20180926040402Plan_name": {
+      "defaultValue": "BierRapport20180926040402Plan",
+      "type": "String"
+    },
+    "config_web_name": {
+      "defaultValue": "web",
+      "type": "String"
+    },
+    "config_web_name_1": {
+      "defaultValue": "web",
+      "type": "String"
+    },
+    "hostNameBindings_bierrapport20180926040402.azurewebsites.net_name": {
+      "defaultValue": "bierrapport20180926040402.azurewebsites.net",
+      "type": "String"
+    },
+    "hostNameBindings_queueprocessor20180926040624.azurewebsites.net_name": {
+      "defaultValue": "queueprocessor20180926040624.azurewebsites.net",
+      "type": "String"
+    }
   },
+  "variables": {},
   "resources": [
-
     {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Maps/accounts/Bierrapport'.",
+      "type": "Microsoft.Maps/accounts",
+      "sku": {
+        "name": "s0",
+        "tier": "Standard"
+      },
+      "name": "[parameters('accounts_Bierrapport_name')]",
+      "apiVersion": "2018-05-01",
+      "location": "global",
+      "scale": null,
+      "properties": {
+        "x-ms-client-id": "62bfe2df-cd72-422b-8a57-3258462b8aa1"
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Storage/storageAccounts/bierrapport'.",
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "accountType": "Standard_LRS"
-      }
-    },
-
-    {
-      "apiVersion": "2014-06-01",
-      "location": "West Europe",
-      "name": "[variables('apiHostingPlanName')]",
-      "properties": {
-        "name": "[variables('apiHostingPlanName')]",
-        "sku": "Free",
-        "workerSize": "Small",
-        "numberOfWorkers": 1
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
       },
-      "type": "Microsoft.Web/serverfarms"
-    },
-
-    {
-      "apiVersion": "2015-08-01",
-      "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', concat(variables('apiHostingPlanName')))]"
-      ],
-      "kind": "api",
-      "location": "West Europe",
-      "name": "[concat(variables('apiName'))]",
+      "kind": "Storage",
+      "name": "[parameters('storageAccounts_bierrapport_name')]",
+      "apiVersion": "2018-07-01",
+      "location": "eastus",
+      "tags": {},
+      "scale": null,
       "properties": {
-        "name": "[variables('apiName')]",
-        "serverFarmId": "[variables('apiHostingPlanName')]",
-        "siteConfig": "[variables('apiProperties')]",
-        "httpsOnly": true
-      },
-      "resources": [
-        {
-          "apiVersion": "2015-08-01",
-          "type": "config",
-          "name": "connectionstrings",
-          "dependsOn": [
-            "[concat('Microsoft.Web/sites/', concat(variables('apiName')))]"
-          ],
-          "properties": {
-            "StorageConnectionString": {
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]",
-              "type": "Custom"
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": false,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
             }
-          }
+          },
+          "keySource": "Microsoft.Storage"
         }
-      ],
-      "type": "Microsoft.Web/sites"
+      },
+      "dependsOn": []
     },
     {
-      "apiVersion": "2015-08-01",
-      "type": "Microsoft.Web/sites",
-      "name": "[variables('functionsName')]",
-      "location": "[resourceGroup().location]",
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/BierRapport20180926040402Plan'.",
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "Y1",
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y",
+        "capacity": 0
+      },
       "kind": "functionapp",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('apiHostingPlanName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
-      ],
+      "name": "[parameters('serverfarms_BierRapport20180926040402Plan_name')]",
+      "apiVersion": "2016-09-01",
+      "location": "Central US",
+      "scale": null,
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('apiHostingPlanName'))]",
-        "siteConfig": {
-          "appSettings": [
-            {
-              "name": "AzureWebJobsDashboard",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]"
-            },
-            {
-              "name": "AzureWebJobsStorage",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]"
-            },
-            {
-              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]"
-            },
-            {
-              "name": "WEBSITE_CONTENTSHARE",
-              "value": "[toLower(variables('functionsName'))]"
-            },
-            {
-              "name": "StorageConnectionString",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]"
-            }
+        "name": "[parameters('serverfarms_BierRapport20180926040402Plan_name')]",
+        "workerTierName": null,
+        "adminSiteName": null,
+        "hostingEnvironmentProfile": null,
+        "perSiteScaling": false,
+        "reserved": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/ServicePlan2a9cbfc8-b1ee'.",
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "F1",
+        "tier": "Free",
+        "size": "F1",
+        "family": "F",
+        "capacity": 0
+      },
+      "kind": "app",
+      "name": "[parameters('serverfarms_ServicePlan2a9cbfc8_b1ee_name')]",
+      "apiVersion": "2016-09-01",
+      "location": "Central US",
+      "scale": null,
+      "properties": {
+        "name": "[parameters('serverfarms_ServicePlan2a9cbfc8_b1ee_name')]",
+        "workerTierName": null,
+        "adminSiteName": null,
+        "hostingEnvironmentProfile": null,
+        "perSiteScaling": false,
+        "reserved": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/QueueProcessor20180926040624'.",
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
+      "name": "[parameters('sites_QueueProcessor20180926040624_name')]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "identity": {
+        "principalId": "bd46e394-92b4-4f2e-a65c-f064c2239325",
+        "tenantId": "ad78d191-1044-4303-8212-b6f4dd7874bc",
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "hidden-related:/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/BierRapport20180926040402Plan": "empty"
+      },
+      "scale": null,
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_QueueProcessor20180926040624_name'),'queueprocessor20180926040624.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "virtualIP": null,
+            "thumbprint": null,
+            "toUpdate": null,
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('sites_QueueProcessor20180926040624_name'),'queueprocessor20180926040624.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "virtualIP": null,
+            "thumbprint": null,
+            "toUpdate": null,
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_BierRapport20180926040402Plan_name'))]",
+        "reserved": false,
+        "siteConfig": null,
+        "scmSiteAlsoStopped": false,
+        "hostingEnvironmentProfile": null,
+        "clientAffinityEnabled": true,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 1536,
+        "dailyMemoryTimeQuota": 0,
+        "cloningInfo": null
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_BierRapport20180926040402Plan_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/BierRapport20180926040402'.",
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
+      "name": "[parameters('sites_BierRapport20180926040402_name')]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "identity": {
+        "principalId": "614f277d-68ef-4f5f-b3a8-d21476973d64",
+        "tenantId": "ad78d191-1044-4303-8212-b6f4dd7874bc",
+        "type": "SystemAssigned"
+      },
+      "tags": {
+        "hidden-related:/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/BierRapport20180926040402Plan": "empty"
+      },
+      "scale": null,
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_BierRapport20180926040402_name'),'bierrapport20180926040402.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "virtualIP": null,
+            "thumbprint": null,
+            "toUpdate": null,
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('sites_BierRapport20180926040402_name'),'bierrapport20180926040402.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "virtualIP": null,
+            "thumbprint": null,
+            "toUpdate": null,
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_BierRapport20180926040402Plan_name'))]",
+        "reserved": false,
+        "siteConfig": null,
+        "scmSiteAlsoStopped": false,
+        "hostingEnvironmentProfile": null,
+        "clientAffinityEnabled": true,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 1536,
+        "dailyMemoryTimeQuota": 0,
+        "cloningInfo": null
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_BierRapport20180926040402Plan_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/QueueProcessor20180926040624/config/web'.",
+      "type": "Microsoft.Web/sites/config",
+      "name": "[concat(parameters('sites_QueueProcessor20180926040624_name'), '/', parameters('config_web_name_1'))]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "tags": {
+        "hidden-related:/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/BierRapport20180926040402Plan": "empty"
+      },
+      "scale": null,
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "phpVersion": "5.6",
+        "pythonVersion": "",
+        "nodeVersion": "",
+        "linuxFxVersion": "",
+        "windowsFxVersion": null,
+        "requestTracingEnabled": false,
+        "remoteDebuggingEnabled": false,
+        "remoteDebuggingVersion": null,
+        "httpLoggingEnabled": false,
+        "logsDirectorySizeLimit": 35,
+        "detailedErrorLoggingEnabled": false,
+        "publishingUsername": "$QueueProcessor20180926040624",
+        "publishingPassword": null,
+        "appSettings": null,
+        "azureStorageAccounts": {},
+        "metadata": null,
+        "connectionStrings": null,
+        "machineKey": null,
+        "handlerMappings": null,
+        "documentRoot": null,
+        "scmType": "None",
+        "use32BitWorkerProcess": true,
+        "webSocketsEnabled": false,
+        "alwaysOn": false,
+        "javaVersion": null,
+        "javaContainer": null,
+        "javaContainerVersion": null,
+        "appCommandLine": "",
+        "managedPipelineMode": "Integrated",
+        "virtualApplications": [
+          {
+            "virtualPath": "/",
+            "physicalPath": "site\\wwwroot",
+            "preloadEnabled": false,
+            "virtualDirectories": null
+          }
+        ],
+        "winAuthAdminState": 0,
+        "winAuthTenantState": 0,
+        "customAppPoolIdentityAdminState": false,
+        "customAppPoolIdentityTenantState": false,
+        "runtimeADUser": null,
+        "runtimeADUserPassword": null,
+        "loadBalancing": "LeastRequests",
+        "routingRules": [],
+        "experiments": {
+          "rampUpRules": []
+        },
+        "limits": null,
+        "autoHealEnabled": false,
+        "autoHealRules": null,
+        "tracingOptions": null,
+        "vnetName": "",
+        "siteAuthEnabled": false,
+        "siteAuthSettings": {
+          "enabled": null,
+          "unauthenticatedClientAction": null,
+          "tokenStoreEnabled": null,
+          "allowedExternalRedirectUrls": null,
+          "defaultProvider": null,
+          "clientId": null,
+          "clientSecret": null,
+          "issuer": null,
+          "allowedAudiences": null,
+          "additionalLoginParams": null,
+          "isAadAutoProvisioned": false,
+          "googleClientId": null,
+          "googleClientSecret": null,
+          "googleOAuthScopes": null,
+          "facebookAppId": null,
+          "facebookAppSecret": null,
+          "facebookOAuthScopes": null,
+          "twitterConsumerKey": null,
+          "twitterConsumerSecret": null,
+          "microsoftAccountClientId": null,
+          "microsoftAccountClientSecret": null,
+          "microsoftAccountOAuthScopes": null
+        },
+        "cors": {
+          "allowedOrigins": [
+            "https://functions.azure.com",
+            "https://functions-staging.azure.com",
+            "https://functions-next.azure.com"
           ]
-        }
-      }
-    }
-  ],
-  "outputs": {
-    "functionsName": {
-      "type": "string",
-      "value": "[variables('functionsName')]"
+        },
+        "push": null,
+        "apiDefinition": null,
+        "autoSwapSlotName": null,
+        "localMySqlEnabled": false,
+        "managedServiceIdentityId": 701,
+        "xManagedServiceIdentityId": null,
+        "ipSecurityRestrictions": null,
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        "ftpsState": "AllAllowed",
+        "reservedInstanceCount": 0
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_QueueProcessor20180926040624_name'))]"
+      ]
     },
-    "storageConnection": {
-      "type": "string",
-      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').key1)]"
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/QueueProcessor20180926040624/hostNameBindings/queueprocessor20180926040624.azurewebsites.net'.",
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "name": "[concat(parameters('sites_QueueProcessor20180926040624_name'), '/', parameters('hostNameBindings_queueprocessor20180926040624.azurewebsites.net_name'))]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "scale": null,
+      "properties": {
+        "siteName": "QueueProcessor20180926040624",
+        "domainId": null,
+        "hostNameType": "Verified"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_QueueProcessor20180926040624_name'))]"
+      ]
     },
-    "storageRootUrl": {
-      "type": "string",
-      "value": "[concat('https://', variables('storageAccountName'), '.blob.core.windows.net/')]"
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/BierRapport20180926040402/config/web'.",
+      "type": "Microsoft.Web/sites/config",
+      "name": "[concat(parameters('sites_BierRapport20180926040402_name'), '/', parameters('config_web_name'))]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "tags": {
+        "hidden-related:/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/serverfarms/BierRapport20180926040402Plan": "empty"
+      },
+      "scale": null,
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "phpVersion": "5.6",
+        "pythonVersion": "",
+        "nodeVersion": "",
+        "linuxFxVersion": "",
+        "windowsFxVersion": null,
+        "requestTracingEnabled": false,
+        "remoteDebuggingEnabled": false,
+        "remoteDebuggingVersion": null,
+        "httpLoggingEnabled": false,
+        "logsDirectorySizeLimit": 35,
+        "detailedErrorLoggingEnabled": false,
+        "publishingUsername": "$BierRapport20180926040402",
+        "publishingPassword": null,
+        "appSettings": null,
+        "azureStorageAccounts": {},
+        "metadata": null,
+        "connectionStrings": null,
+        "machineKey": null,
+        "handlerMappings": null,
+        "documentRoot": null,
+        "scmType": "None",
+        "use32BitWorkerProcess": true,
+        "webSocketsEnabled": false,
+        "alwaysOn": false,
+        "javaVersion": null,
+        "javaContainer": null,
+        "javaContainerVersion": null,
+        "appCommandLine": "",
+        "managedPipelineMode": "Integrated",
+        "virtualApplications": [
+          {
+            "virtualPath": "/",
+            "physicalPath": "site\\wwwroot",
+            "preloadEnabled": false,
+            "virtualDirectories": null
+          }
+        ],
+        "winAuthAdminState": 0,
+        "winAuthTenantState": 0,
+        "customAppPoolIdentityAdminState": false,
+        "customAppPoolIdentityTenantState": false,
+        "runtimeADUser": null,
+        "runtimeADUserPassword": null,
+        "loadBalancing": "LeastRequests",
+        "routingRules": [],
+        "experiments": {
+          "rampUpRules": []
+        },
+        "limits": null,
+        "autoHealEnabled": false,
+        "autoHealRules": null,
+        "tracingOptions": null,
+        "vnetName": "",
+        "siteAuthEnabled": true,
+        "siteAuthSettings": {
+          "enabled": null,
+          "unauthenticatedClientAction": null,
+          "tokenStoreEnabled": null,
+          "allowedExternalRedirectUrls": null,
+          "defaultProvider": null,
+          "clientId": null,
+          "clientSecret": null,
+          "issuer": null,
+          "allowedAudiences": null,
+          "additionalLoginParams": null,
+          "isAadAutoProvisioned": false,
+          "googleClientId": null,
+          "googleClientSecret": null,
+          "googleOAuthScopes": null,
+          "facebookAppId": null,
+          "facebookAppSecret": null,
+          "facebookOAuthScopes": null,
+          "twitterConsumerKey": null,
+          "twitterConsumerSecret": null,
+          "microsoftAccountClientId": null,
+          "microsoftAccountClientSecret": null,
+          "microsoftAccountOAuthScopes": null
+        },
+        "cors": {
+          "allowedOrigins": [
+            "https://functions.azure.com",
+            "https://functions-staging.azure.com",
+            "https://functions-next.azure.com"
+          ]
+        },
+        "push": null,
+        "apiDefinition": null,
+        "autoSwapSlotName": null,
+        "localMySqlEnabled": false,
+        "managedServiceIdentityId": 700,
+        "xManagedServiceIdentityId": null,
+        "ipSecurityRestrictions": null,
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        "ftpsState": "AllAllowed",
+        "reservedInstanceCount": 0
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_BierRapport20180926040402_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/9a8211bb-1ffa-4e15-b08e-1794775601ad/resourceGroups/Shoarma/providers/Microsoft.Web/sites/BierRapport20180926040402/hostNameBindings/bierrapport20180926040402.azurewebsites.net'.",
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "name": "[concat(parameters('sites_BierRapport20180926040402_name'), '/', parameters('hostNameBindings_bierrapport20180926040402.azurewebsites.net_name'))]",
+      "apiVersion": "2016-08-01",
+      "location": "Central US",
+      "scale": null,
+      "properties": {
+        "siteName": "BierRapport20180926040402",
+        "domainId": null,
+        "hostNameType": "Verified"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_BierRapport20180926040402_name'))]"
+      ]
     }
-  }
+  ]
 }
